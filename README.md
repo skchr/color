@@ -1,3 +1,6 @@
+> [!WARNING]
+> This library is currently under active refactoring. The API may change significantly between versions. Use with caution in production environments.
+
 [![NPM publish 📦](https://github.com/xml-wizard/huetiful/actions/workflows/release-please.yml/badge.svg)](https://github.com/prjctimg/huetiful/actions/workflows/publish.yml)
 
 ![huetiful-logo](./logo.svg)

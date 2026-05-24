@@ -26,6 +26,7 @@ import {
   interpolatorSplineMonotone,
   samples,
   fixupHueLonger,
+  fixupHueShorter,
 } from "culori/fn";
 
 /**

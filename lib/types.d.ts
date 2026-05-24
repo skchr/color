@@ -586,7 +586,6 @@ export type ColorFamily =
   | "green"
   | "blue"
   | "yellow"
-  | "red"
   | "purple"
   | "gray";
 

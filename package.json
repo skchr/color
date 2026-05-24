@@ -2,9 +2,9 @@
   "name": "@prjctimg/huetiful",
   "version": "0.0.1",
   "type": "module",
-  "main": "./build/huetiful.esm.js",
-  "browser": "./build/huetiful.min.js",
-  "jsdelivr": "./build/huetiful.min.js",
+  "main": "./build/node/huetiful.esm.js",
+  "browser": "./build/browser/huetiful.min.js",
+  "jsdelivr": "./build/browser/huetiful.min.js",
   "types": "./build/index.d.ts",
   "description": "TypeScript utility library for simple 🧮, fast ⏱️ and accessible ♿ color manipulation.",
   "devDependencies": {

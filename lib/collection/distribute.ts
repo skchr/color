@@ -1,14 +1,11 @@
-import { fixupHueLonger, fixupHueShorter } from "culori/fn";
-import { hf, iterator, map, mcchn, or } from "../internal/index.ts";
+import { iterator, mcchn, values } from "../internal/index.ts";
 import type {
   Collection,
   ColorToken,
   DistributionOptions,
   Factor,
 } from "../types.d.ts";
-import { achromatic, luminance, mc } from "../utils/index.ts";
-
-// distributionfunc => the function to use when tweaking the channel values. we use culori's mapper function
+import { achromatic, luminance, mc, token } from "../utils/index.ts";
 
 /**
  * distributes the `factor`(s) of a color in the collection at the specified `extremum` (i.e the color with the smallest/largest `hue` angle or `chroma` value) to all color tokens in the collection.
@@ -19,71 +16,87 @@ export default function distribute<Options extends DistributionOptions>(
   collection: Collection,
   options?: Options,
 ): Collection {
-  // Destructure the opts to check before distributing the factor
   let {
     extremum,
     excludeSelf,
     excludeAchromatic,
     colorspace,
-    hueFixup,
     factor,
+    token: tokenOptions,
   } = (options || {}) as Options;
-  // Set the extremum to distribute to default to max if its not min
+
   extremum = extremum || "max";
-
   factor = factor || ["chroma"];
-  // Exclude the colorToken with the specified factor extremum being distributed from the mapping
   excludeSelf = excludeSelf || false;
-
   excludeAchromatic = excludeAchromatic || false;
 
-  if (excludeAchromatic) collection = map(collection, achromatic);
+  if (excludeAchromatic) {
+    collection = values(collection).filter(
+      (c) => !achromatic(c),
+    ) as Collection;
+  }
 
-  // The fixup to use when tweaking the hue channels
-  // @ts-ignore:
-  hueFixup = factor.includes("hue")
-    ? hueFixup?.toLowerCase() === "longer"
-      ? fixupHueLonger
-      : fixupHueShorter
-    : hf;
-  colorspace = or(colorspace, "lch");
-
-  type ExtremumObject = {
-    [K in Factor]:
-      | Array<{
-          color: ColorToken[];
-          factor: number;
-        }>
-      | Array<{ [K in Factor]: number }>;
-  };
-  // @ts-ignore:
-  const extremumsObject = sortBy(collection, {
-      factorObject: true,
-      factor: factor,
-      order: extremum?.toLowerCase() === "max" ? "desc" : "asc",
-    }) as ExtremumObject,
-    factCallbacks = (fact: Factor, tkn: ColorToken, val: number | string) => {
-      // @ts-ignore:
-      return {
-        hue: mc(`${colorspace}.h`),
-        lightness: mc(mcchn("l", colorspace, true)),
-        chroma: mc(mcchn("c", colorspace, true)),
-        luminance: luminance,
-      }[fact](tkn, val) as ColorToken;
-    };
+  colorspace = colorspace || "lch";
 
   const callback = (fact: Factor) => {
-    // for each color tuple, tweak its factor
-    // and have the operation clamped
+    const allColors = values(collection) as ColorToken[];
+    const channelKey =
+      fact === "luminance"
+        ? "l"
+        : fact === "chroma"
+          ? mcchn("c", colorspace, false)
+          : fact === "lightness"
+            ? mcchn("l", colorspace, false)
+            : "h";
 
-    var c = 0;
+    const mode = fact === "luminance" ? "lab" : colorspace;
 
-    for (const idx in collection as Array<ColorToken>) {
-      // pass the current token to a factor callback that retrieves the token's targeted factor
-      // and mutates it
-      // collection[idx] = factCallbacks(fact, collection[idx]);
+    const getFactorValue = (tkn: ColorToken): number => {
+      if (fact === "luminance") return luminance(tkn) as number;
+      return mc(`${colorspace}.${channelKey}`)(tkn) as number;
+    };
+
+    const setFactorValue = (tkn: ColorToken, val: number): ColorToken => {
+      if (fact === "luminance")
+        return luminance(tkn, val) as ColorToken;
+      const obj = token(tkn, {
+        kind: "obj",
+        targetMode: mode,
+      }) as Record<string, unknown>;
+      obj[channelKey] = val;
+      return token(obj, tokenOptions) as ColorToken;
+    };
+
+    const allValues = allColors.map(getFactorValue);
+
+    let extremumValue: number;
+    if (extremum === "mean") {
+      extremumValue =
+        allValues.reduce((a, b) => a + b, 0) / allValues.length;
+    } else if (extremum === "min") {
+      extremumValue = Math.min(...allValues);
+    } else {
+      extremumValue = Math.max(...allValues);
     }
+
+    const extremumIndices = new Set<number>();
+    if (excludeSelf && extremum !== "mean") {
+      allValues.forEach((v, i) => {
+        if (v === extremumValue) extremumIndices.add(i);
+      });
+    }
+
+    return allColors
+      .map((tkn, i) => {
+        if (excludeSelf && extremumIndices.has(i)) return null;
+        return setFactorValue(tkn, extremumValue);
+      })
+      .filter((c): c is ColorToken => c !== null);
   };
 
-  return iterator(factor, callback, true, ["chroma", "hue", "lightness"]);
+  return iterator(factor, callback, true, [
+    "chroma",
+    "hue",
+    "lightness",
+  ]) as Collection;
 }

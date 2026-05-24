@@ -1,5 +1,5 @@
 import { contrast, deficiency } from "../accessibility/index.ts";
-import { filterBy, sortBy, stats } from "../collection/index.ts";
+import { distribute, filterBy, sortBy, stats } from "../collection/index.ts";
 import {
   discover,
   earthtone,
@@ -19,6 +19,7 @@ import type {
   ColorToken,
   DeficiencyOptions,
   DiscoverOptions,
+  DistributionOptions,
   EarthtoneOptions,
   FilterByOptions,
   HueshiftOptions,
@@ -436,9 +437,11 @@ class Color {
   //#464646
   
    */
-  lightness(amount?: number, darken = undefined): ColorToken {
-    const params = [amount, darken];
-    return this.#setThis(lightness, ...params);
+  lightness(amount?: number, darken = false): ColorToken {
+    return this.#setThis(lightness, {
+      amount: amount,
+      darken: darken,
+    });
   }
 
   /**

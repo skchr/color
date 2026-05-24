@@ -167,12 +167,12 @@ function take(x: number, y: number): number {
 }
 
 function exprParser(a: unknown, b: unknown) {
+  if (typeof b !== "string") return a;
+  const op = reOp(b) as string;
+  const num = reNum(b);
+  if (!op || !num) return a;
   // @ts-ignore:
-  return and(
-    eq(typeof b, "string"),
-    // @ts-ignore:
-    operators[reOp(b)](a, reNum(b)),
-  );
+  return operators[op](a, num);
 }
 
 /**
@@ -230,10 +230,7 @@ function customFindKey(u: typeof hue, v: number) {
 }
 
 function adjustHue(val: number) {
-  let out = 0;
-  if (val < 0) out += Math.ceil(-val / 360) * 360;
-
-  return out % 360;
+  return ((val % 360) + 360) % 360;
 }
 
 function chnDiff(x?: ColorToken, s?: string) {
@@ -429,13 +426,9 @@ function filteredColl(fact: Factor, cb: (x: unknown) => unknown) {
 
     // @ts-ignore:
     const comparator = (x) => (y) => {
-      // get the symbols for the operators
-      // and their values
-      // check if the num/symbol is valid before doing anything
-
       const op = typeof x === "string" && reOp(x);
       const num = reNum(x);
-      const hasNum = !num;
+      const hasNum = typeof num === "number" && !Number.isNaN(num);
       // @ts-ignore:
       const hasOp = keys(operators).includes(op);
 
@@ -443,7 +436,7 @@ function filteredColl(fact: Factor, cb: (x: unknown) => unknown) {
         // @ts-ignore:
         return hasOp
           ? // @ts-ignore:
-            operators[op](num, y[fact])
+            operators[op](y[fact], num)
           : inRange(y[fact], num);
       // @ts-ignore:
       return Error("argument must contain a number for comparison");

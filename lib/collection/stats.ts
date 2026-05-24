@@ -66,11 +66,9 @@ export default function stats(
   let { factor, relative, against, colorspace } =
     options || ({} as StatsOptions);
 
+  colorspace = colorspace || "lch";
+  against = against || "cyan";
   relative = relative || false;
-
-  colorspace = "lch";
-  against = "cyan";
-  relative = false;
 
   const getStatsObject = (fact: Factor) => {
     /**

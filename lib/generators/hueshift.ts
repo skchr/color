@@ -94,7 +94,7 @@ export default function hueshift(
         // @ts-ignore:
         c: baseColor?.c,
         // @ts-ignore:
-        h: adjustHue(baseColor.h + hueStep) * easingFn(j),
+        h: adjustHue(baseColor.h + hueStep * easingFn(j)),
         mode: "lch",
       },
     ];

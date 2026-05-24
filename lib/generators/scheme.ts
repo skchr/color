@@ -67,7 +67,7 @@ export default function scheme(
       for (let [k, v] of entries(samples(stops))) {
         v = adjustHue(
           // @ts-ignore:
-          (baseColor.h + step) * (v * or(easingFn, easingSmoothstep)(v)),
+           (baseColor.h + step) * (v * or(easingFn, ef)(v)),
         );
         // @ts-ignore:
         res[k] =

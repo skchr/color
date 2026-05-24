@@ -122,8 +122,7 @@ function alpha<Amount>(
 
   //  if amount is undefined, return the alpha channel
   if (typeof amount === "undefined")
-    // @ts-ignore:
-    return (alphaChannel && alphaChannel) || 1;
+  return typeof alphaChannel === "number" ? alphaChannel : 1;
 
   switch (typeof amount) {
     case "number":
@@ -373,8 +372,24 @@ function token(color: ColorToken = "cyan", options?: TokenOptions): ColorToken {
   /**
    * the alpha channel captured if it exists in the color token
    */
-  // @ts-ignore:
-  const alphaValue = alpha(color);
+  const alphaValue = (() => {
+    if (isArray(color)) {
+      const nums = (color as ColorTuple).filter(
+        (c) => typeof c === "number",
+      );
+      return nums.length === 4 ? (nums[3] as number) : 1;
+    }
+    if (typeof color === "string") {
+      return (color as string).length >= 8 &&
+        !colorsNamed[(color as string).toLowerCase()]
+        ? Number.parseInt((color as string).slice(-2), 16) / 255
+        : 1;
+    }
+    if (typeof color === "object" && color !== null && !("length" in color)) {
+      return (color as Record<string, unknown>)?.alpha ?? 1;
+    }
+    return 1;
+  })();
   let result: { [x: string]: number | string } = {};
   result.mode = srcMode;
   // Get the channels from passed in color token
@@ -393,8 +408,7 @@ function token(color: ColorToken = "cyan", options?: TokenOptions): ColorToken {
 
   if (eq(typeof color, "string"))
     // @ts-ignore:
-    result =
-      (typeof color === "number" && num2c()) || parseToken(c2str(), "rgb");
+    result = parseToken(c2str(), "rgb");
 
   // @ts-ignore:
   if (srcChannelValues)
@@ -488,7 +502,7 @@ function token(color: ColorToken = "cyan", options?: TokenOptions): ColorToken {
       // @ts-ignore:
       object: (omitAlpha ? formatHex : formatHex8)(c2col("obj")),
       // @ts-ignore:
-      string: or(colorsNamed?.color, formatHex(color)),
+      string: or(colorsNamed?.[color as string], formatHex(color)),
     }[typeof color];
   }
 

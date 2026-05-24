@@ -1,9 +1,10 @@
-// @ts-nocheck:
+// @ts-nocheck
 
 import { test, expect } from "bun:test";
 import {
   contrast,
   deficiency,
+  distribute,
   sortBy,
   filterBy,
   stats,
@@ -74,13 +75,11 @@ const specs = [
 
     params: [samples],
   },
-  // {
-  //   description: "Distributes factors of a collection of color.",
-  //   callback: distribute,
-  //   matcher: "toEqual",
-  //   params: [],
-  //   result: "",
-  // },
+  {
+    description: "Distributes factors of a collection of color.",
+    callback: distribute,
+    params: [samples, { factor: ["chroma"], extremum: "max" }],
+  },
 
   {
     description: "Discovers palette combinations from an array of colors",
