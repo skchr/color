@@ -61,4 +61,4 @@ source/lib
 *storybook.log
 
 # TypeDoc output
-/typedoc-output
+/docs

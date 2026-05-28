@@ -9,7 +9,7 @@
     "./lib/types.d.ts"
   ],
   "entryPointStrategy": "resolve",
-  "out": "./typedoc-output",
+  "out": "./docs",
   "plugin": ["typedoc-material-theme"],
   "themeColor": "#a7c7e7",
   "projectDocuments": ["src-docs/**/*.md"],
