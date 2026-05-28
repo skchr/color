@@ -9,10 +9,10 @@
     "./lib/types.d.ts"
   ],
   "entryPointStrategy": "resolve",
-  "out": "./docs",
+  "out": "./site",
   "plugin": ["typedoc-material-theme"],
   "themeColor": "#a7c7e7",
-  "projectDocuments": ["src-docs/**/*.md"],
+  "projectDocuments": ["docs/**/*.md"],
   "cleanOutputDir": true,
   "skipErrorChecking": true,
   "exclude": ["./lib/internal"],
