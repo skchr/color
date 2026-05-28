@@ -20,14 +20,14 @@ await $`sudo rm -rf build  && echo 'Cleaned build/ directory'`;
 // library bundle minified
 (await build({
   ...baseOptions,
-  naming: "browser/huetiful.min.js",
+  naming: "browser/color.min.js",
 }).then(logger("Browser ESM (minified) entire library"))) &&
   (await build({
     ...baseOptions,
 
     minify: false,
     target: "node",
-    naming: "node/huetiful.esm.js",
+    naming: "node/color.esm.js",
   }).then(logger("Node")));
 await $`bun tsup  --format=esm ./lib/index.ts --dts-only --outDir=./build`;
 await $`du -sh build/*`;

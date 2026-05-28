@@ -19,11 +19,12 @@ import type { ColorToken, DeficiencyOptions } from "../types.d.ts";
  *
  *
  *
- * @param  a First color to query. The default is `white`.
- * @param  b The color to compare against. The default is `black`.
+ * @param {ColorToken} a - First color to query. The default is `white`.
+ * @param {ColorToken} b - The color to compare against. The default is `black`.
+ * @returns {number} - The contrast ratio between the two colors.
  * @example
  *
- * import { contrast } from 'huetiful-js'
+ * import { contrast } from '@skchr/color'
  *
  * console.log(contrast("blue", "red"));
  * // 21
@@ -48,11 +49,12 @@ function contrast(a: ColorToken = "white", b: ColorToken = "black"): number {
  * 
  *  
 
- * @param  color The color to return its simulated variant. The default is `cyan`.
- * @param  options The optional overrides for tweaking the final output.
+ * @param {ColorToken} color - The color to return its simulated variant. The default is `cyan`.
+ * @param {DeficiencyOptions} [options] - The optional overrides for tweaking the final output.
+ * @returns {ColorToken} - The simulated color as perceived by the specified color vision deficiency.
  * @example
  *
- * import { deficiency } from 'huetiful-js'
+ * import { deficiency } from '@skchr/color'
 
 // Here we are simulating color blindness of tritanomaly or we can't see 'blue'.
 // We are passing in our color as an array of channel values in the mode "rgb". The severity is set to 0.5

@@ -299,11 +299,11 @@ function hasScheme(s: string = "", obj: Collection = {}) {
 }
 /**
  *  A wrapper function for ColorBrewer's map of sequential color schemes.
- * @param  scheme The name of the scheme. 
- * @returns {Collection|import('../types.js').ColorToken}  A collection of colors in the specified colorspace. The default is hex if `colorspace` is `undefined.`
+ * @param {SequentialScheme} scheme - The name of the scheme.
+ * @returns {Collection|import('../types.js').ColorToken} - A collection of colors in the specified colorspace. The default is hex if `colorspace` is `undefined.`
  * @example
  *
- * import { sequential } from '@prjctimg/huetiful'
+ * import { sequential } from '@skchr/color'
 
 
 console.log(sequential("OrRd"))
@@ -540,10 +540,11 @@ function sequential<Scheme extends SequentialScheme>(
 
 /**
  *  A wrapper function for ColorBrewer's map of diverging color schemes.
- * @param  scheme The name of the scheme.
+ * @param {DivergingScheme} scheme - The name of the scheme.
+ * @returns {Scheme[]} - A collection of colors forming the diverging scheme.
  * @example
  *
- * import { diverging } from '@prjctimg/huetiful'
+ * import { diverging } from '@skchr/color'
 
 
 
@@ -683,10 +684,11 @@ function diverging<Scheme extends DivergingScheme>(
 }
 /**
  *  A wrapper function for ColorBrewer's map of qualitative color schemes.
- * @param scheme The name of the scheme
+ * @param {QualitativeScheme} scheme - The name of the scheme.
+ * @returns {Scheme[]} - A collection of colors forming the qualitative scheme.
  * @example
  *
- * import { qualitative } from '@prjctimg/huetiful'
+ * import { qualitative } from '@skchr/color'
 
 
 console.log(qualitative("Accent"))
@@ -802,8 +804,9 @@ function qualitative<Scheme extends QualitativeScheme>(
  *
  * * To get the nearest color from the Tailwind CSS default palette pass in the string `tailwind` as the `collection` parameter.
  * * If the `num` parameter is more than 1, the returned collection of colors has the colors sorted starting with the nearest color first
- * @param  collection The collection of colors to search for nearest colors.
- * @param options Optional overrides.
+ * @param {Collection | "tailwind"} collection - The collection of colors to search for nearest colors.
+ * @param {object} [options] - Optional overrides with `num` and `against` properties.
+ * @returns {Collection | ColorToken} - The nearest color(s) from the collection.
  * @example
  *
  * let cols = colors('all', '500')
@@ -844,12 +847,12 @@ function nearest(
    *   
    *  To specify `'050'` as a number you just pass `50`. Values are all valid as string or number for example `'100'` and`100` .
    *  
-   * @param  shade The hue family to return.
-   * @param   value The tone value of the shade. Values are in incrementals of `100`. For example numeric (`100`) and its string equivalent (`'100'`) are valid.
-   * @returns {Array<string>|string}
+ * @param {Tailwind | "all"} shade - The hue family to return.
+ * @param {ScaleValues} [value] - The tone value of the shade. Values are in incrementals of `100`. For example numeric (`100`) and its string equivalent (`'100'`) are valid.
+ * @returns {Array<string>|string} - The Tailwind CSS color value(s).
    * @example
    *
-   * import { colors } from "@prjctimg/huetiful";
+   * import { colors } from "@skchr/color";
 
   // We pass in red as the target hue.
   // It returns a function that can be called with an optional value parameter

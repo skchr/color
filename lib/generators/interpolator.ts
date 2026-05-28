@@ -48,12 +48,13 @@ import {
  * * If the collection of colors contains an achromatic color, the resulting samples may all be grayscale or pure black.
  *
  * @param baseColors The collection of colors to interpolate. If a color has a falsy channel for example black has an undefined hue channel some interpolation methods may return NaN affecting the final result or making all the colors in the resulting interpolation gray.
- * @param  options Optional overrides to customize parameters such as interpolation methods and per channel eeasings.
- * @returns 
+ * @param {ColorToken[]} baseColors The collection of colors to interpolate. If a color has a falsy channel for example black has an undefined hue channel some interpolation methods may return NaN affecting the final result or making all the colors in the resulting interpolation gray.
+ * @param {InterpolatorOptions} options Optional overrides to customize parameters such as interpolation methods and per channel eeasings.
+ * @returns {ColorToken[]} An array of interpolated color tokens.
  *
  * @example
  *
- * import { interpolator } from '@prjctimg/huetiful';
+ * import { interpolator } from '@skchr/color';
 
 console.log(interpolator(['pink', 'blue'], { num:8 }));
 

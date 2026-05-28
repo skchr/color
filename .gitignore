@@ -59,3 +59,6 @@ next-env.d.ts
 source/lib
 
 *storybook.log
+
+# TypeDoc output
+/typedoc-output

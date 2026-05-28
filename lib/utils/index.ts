@@ -60,11 +60,11 @@ import { interpolator } from "../generators/index.ts";
  *
  * If the `alpha` channel is `undefined`, it defaults to `1`.
  *
- * @param  color The color with the opacity/alpha channel to retrieve or set.
- * @param amount The value to apply to the opacity channel. The value is between `[0,1]`
-
+ * @param {ColorToken} color - The color with the opacity/alpha channel to retrieve or set.
+ * @param {Amount} [amount] - The value to apply to the opacity channel. The value is between `[0,1]`.
+ * @returns {Amount extends undefined ? number : ColorToken} - The alpha channel value if `amount` is omitted, or the color token with the new alpha if `amount` is provided.
  * @example
-  import { alpha } from '@prjctimg/huetiful'
+  import { alpha } from '@skchr/color'
 
  // Getting the alpha
 console.log(alpha('#a1bd2f0d'))
@@ -160,7 +160,7 @@ function alpha<Amount>(
 
  * @example
 
- * import { mc } from '@prjctimg/huetiful'
+ * import { mc } from '@skchr/color'
 
 console.log(mc('rgb.g')('#a1bd2f'))
 // 0.7411764705882353
@@ -201,10 +201,11 @@ function mc(modeChannel = "") {
 /**
  * Checks if a color token is achromatic (without hue or simply grayscale).
  *
- * @param  color The color token to test if it is achromatic or not.
+ * @param {ColorToken} color - The color token to test if it is achromatic or not.
+ * @returns {boolean} - Whether the color is achromatic (without hue or grayscale).
  * @example
 
-import { achromatic } from "@prjctimg/huetiful";
+import { achromatic } from "@skchr/color";
 S
  achromatic('pink')
 // false
@@ -225,7 +226,7 @@ achromatic('gray')
 
 // We can expand this example by interpolating between black and white and then getting some samples to iterate through.
 
-import { interpolator } from "@prjctimg/huetiful"
+import { interpolator } from "@skchr/color"
 
 // we create an interpolation using black and white with 12 samples
 let grays = interpolator(["black", "white"],{ num:12 });
@@ -261,11 +262,12 @@ function achromatic(color: ColorToken): boolean {
 
 /**
  * Darkens the color by reducing the `lightness` channel by `amount` of the channel. For example `0.3` means reduce the lightness by `0.3` of the channel's current value.
- * @param  color The color to darken or lighten.
- * @param  options Specify options such as whether to darken or highlight.
+ * @param {ColorToken} color - The color to darken or lighten.
+ * @param {LightnessOptions} options - Specify options such as whether to darken or highlight.
+ * @returns {ColorToken} - The darkened or lightened color token.
  * @example
  *
- *  import { lightness } from "@prjctimg/huetiful";
+ *  import { lightness } from "@skchr/color";
  *
  // darkening a color
 console.log(lightness('blue', 0.3, true));
@@ -326,9 +328,9 @@ function lightness(color: ColorToken, options?: LightnessOptions): ColorToken {
 
  *
  *  
- * @param  color The color token to parse or convert.
- * @param  options Options to customize the parsing and output behaviour.
- 
+ * @param {ColorToken} color - The color token to parse or convert.
+ * @param {TokenOptions} [options] - Options to customize the parsing and output behaviour.
+ * @returns {ColorToken} - The parsed or converted color token in the specified format.
  */
 function token(color: ColorToken = "cyan", options?: TokenOptions): ColorToken {
   // the mode definitions
@@ -502,7 +504,7 @@ function token(color: ColorToken = "cyan", options?: TokenOptions): ColorToken {
       // @ts-ignore:
       object: (omitAlpha ? formatHex : formatHex8)(c2col("obj")),
       // @ts-ignore:
-      string: or(colorsNamed?.[color as string], formatHex(color)),
+      string: formatHex(color),
     }[typeof color];
   }
 
@@ -539,11 +541,12 @@ function token(color: ColorToken = "cyan", options?: TokenOptions): ColorToken {
  * If the `amount` argument is passed in, it will adjust the luminance by interpolating the color with black (to decrease luminance) or white (to increase the luminance) by the specified `amount`.
  * 
  * If the `amount` argument is not passed in however, it will simply return the color token's luminance.
- * @param  color The color to retrieve or adjust luminance.
- * @param amount The amount of luminance to set. The value range is normalised between [0,1]
+ * @param {ColorToken} color - The color to retrieve or adjust luminance.
+ * @param {number} [amount] - The amount of luminance to set. The value range is normalised between [0,1].
+ * @returns {Amount extends number ? ColorToken : number} - The luminance value if `amount` is omitted, or the color token with the new luminance if `amount` is provided.
  * @example
  *
- * import { luminance } from '@prjctimg/huetiful'
+ * import { luminance } from '@skchr/color'
 
 // Getting the luminance
 
@@ -622,17 +625,13 @@ function luminance<Amount>(
  * Returns the hue family which the passed in color belongs to with the "overtone" included (if it has one.).
  *
  * For example `'red'` or `'blue-green'`. If the color is achromatic it returns the string `'gray'`.
- * @param  color The color to query its shade or hue family.
- * @param bias Returns the name of the hue family which is biasing the passed in color using the `'lch'` colorspace. If it has no bias it returns `false` on the `bias` property of the returned object.
- *  ote
- *
- * This `bias` parameter replaces the `overtone()` function prior version `3.0.x`.
- *
-  
+ * @param {ColorToken} color The color to query its shade or hue family.
+ * @param {boolean} bias Returns the name of the hue family which is biasing the passed in color using the `'lch'` colorspace. If it has no bias it returns `false` on the `bias` property of the returned object.
+ * @returns {string | { bias: string | false; family: string }} The hue family name, or an object with the family and its bias.
  *
  * @example
  *
- * import { family } from '@prjctimg/huetiful'
+ * import { family } from '@skchr/color'
 
 
 console.log(family("#310000"))
@@ -656,7 +655,7 @@ function family(
         const hueRanges = arr.slice(1).flat(1) as number[];
 
         return inRange(mc("lch.h")(color), min(hueRanges), max(hueRanges));
-      })[0]) ||
+      })?.[0]) ||
     "gray";
 
   // @ts-ignore:
@@ -672,11 +671,11 @@ function family(
 /**
  * Returns a rough estimation of a color's temperature as either `'cool'` or `'warm'` using the `'lch'` colorspace.
  *
- * @param  color The color to check the temperature.
- * True if the color is cool else false.
+ * @param {ColorToken} color - The color to check the temperature.
+ * @returns {"cool" | "warm"} - Whether the color is warm or cool.
  * @example
  *
- * import { temp } from '@prjctimg/huetiful'
+ * import { temp } from '@skchr/color'
 
 let sample = [
   "#00ffdc",

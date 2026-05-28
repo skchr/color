@@ -1,27 +1,31 @@
+---
+title: Installation
+---
+
 # Installation
 
 ## npm
 
 ```bash
-npm install @prjctimg/huetiful
+npm install @skchr/color
 ```
 
 ## yarn
 
 ```bash
-yarn add @prjctimg/huetiful
+yarn add @skchr/color
 ```
 
 ## bun
 
 ```bash
-bun add @prjctimg/huetiful
+bun add @skchr/color
 ```
 
 ## Deno
 
 ```bash
-deno add jsr:@prjctimg/huetiful
+deno add jsr:@skchr/color
 ```
 
 ## Usage
@@ -29,7 +33,7 @@ deno add jsr:@prjctimg/huetiful
 Import functions from the package:
 
 ```typescript
-import { token, colors, hueshift } from "@prjctimg/huetiful";
+import { token, colors, hueshift } from "@skchr/color";
 
 // Parse a color to hex
 token("cyan"); // "#00ffff"

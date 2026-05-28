@@ -1,3 +1,7 @@
+---
+title: Picasso
+---
+
 # Picasso Palette Generator
 
 Inspired by Pablo Picasso's artistic periods, focusing on his Blue and Rose periods.
@@ -12,7 +16,7 @@ Picasso's early work is characterized by dramatic color shifts that reflect his 
 ## Usage
 
 ```typescript
-import { picasso } from "@prjctimg/huetiful";
+import { picasso } from "@skchr/color";
 
 // Default: Blue Period
 picasso("blue");
@@ -32,11 +36,11 @@ picasso("blue", { period: "blue", intensity: 0.8 });
 
 ## Options
 
-| Option      | Type               | Default  | Description               |
-| ----------- | ------------------ | -------- | ------------------------- |
-| `period`    | `'blue' \| 'rose'` | `'blue'` | Artistic period           |
-| `intensity` | `number`           | `0.5`    | Emotional intensity (0-1) |
-| `num`       | `number`           | `6`      | Number of colors          |
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `period` | `'blue' \| 'rose'` | `'blue'` | Artistic period |
+| `intensity` | `number` | `0.5` | Emotional intensity (0-1) |
+| `num` | `number` | `6` | Number of colors |
 
 ## Blue Period
 
@@ -92,33 +96,9 @@ picasso("blue", {
   num: 5
 });
 
-// Boy with a Pipe (1905) inspired
-picasso("rose", {
-  period: "rose',
-  num: 5
-});
-
-// Transition palette (Blue → Rose)
+// Transition palette (Blue to Rose)
 const transition = [
   ...picasso("blue", { period: "blue", num: 3 }),
   ...picasso("rose", { period: "rose", num: 3 })
 ];
 ```
-
-## Color Theory
-
-### Blue Period Emotional Palette
-
-- Prussian blue, cobalt, ultramarine
-- Minimal warmth (occasional burnt sienna)
-- Low luminance
-- Represents: melancholy, poverty, introspection
-
-### Rose Period Emotional Palette
-
-- Rose, coral, flesh tones
-- Warm earth browns
-- Higher luminance than Blue
-- Represents: hope, love, performers, joy
-
-The shift from Blue to Rose Period coincided with Picasso meeting Fernande Olivier and finding personal happiness.

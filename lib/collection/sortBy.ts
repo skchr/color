@@ -38,11 +38,12 @@ import { luminance, mc, token } from "../utils/index.ts";
  * * Plain objects are returned as `Map` objects because they remember insertion order. `Map` objects are returned as is.
  * * `ArrayLike` objects are returned as plain arrays. Plain arrays are returned as is.
  *
- * @param collection The `collection` of colors to sort. Any object with enumerable keys and color tokens as values will work. 
- * @param  options The optional overrides to customize the sorting behaviour.
+ * @param {Collection} collection - The collection of colors to sort. Any object with enumerable keys and color tokens as values will work.
+ * @param {SortByOptions} [options] - The optional overrides to customize the sorting behaviour.
+ * @returns {Collection} - The sorted collection of colors.
  * @example
 
-import { sortBy } from '@prjctimg/huetiful'
+import { sortBy } from '@skchr/color'
 
 let sample = ['purple', 'green', 'red', 'brown']
 console.log(

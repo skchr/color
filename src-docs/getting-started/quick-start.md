@@ -1,11 +1,15 @@
+---
+title: Quick Start
+---
+
 # Quick Start
 
 ## Color Tokens
 
-Huetiful supports multiple color formats:
+Color supports multiple color formats:
 
 ```typescript
-import { token } from "@prjctimg/huetiful";
+import { token } from "@skchr/color";
 
 // CSS named colors
 token("pink"); // "#ffc0cb"
@@ -26,7 +30,7 @@ token({ mode: "rgb", r: 1, g: 0.33, b: 0 }); // "#ff5500"
 ## Converting Colors
 
 ```typescript
-import { token } from "@prjctimg/huetiful";
+import { token } from "@skchr/color";
 
 // Convert to different formats
 token("cyan", { kind: "obj", targetMode: "lch" });
@@ -42,7 +46,7 @@ token("cyan", { kind: "num" });
 ## Generating Palettes
 
 ```typescript
-import { hueshift, earthtone, pastel } from "@prjctimg/huetiful";
+import { hueshift, earthtone, pastel } from "@skchr/color";
 
 // Hue-shifted palette
 hueshift("#3e0000");
@@ -60,7 +64,7 @@ pastel("blue");
 ## Collection Methods
 
 ```typescript
-import { sortBy, filterBy, colors } from "@prjctimg/huetiful";
+import { sortBy, filterBy, colors } from "@skchr/color";
 
 const palette = colors("all", "500");
 
@@ -78,7 +82,7 @@ filterBy(palette, {
 ## Chainable API
 
 ```typescript
-import { Color, ColorArray } from "@prjctimg/huetiful";
+import { Color, ColorArray } from "@skchr/color";
 
 // Single color chain
 new Color("red").lightness(0.3).saturation("*0.5").output();

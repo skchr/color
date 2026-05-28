@@ -51,7 +51,7 @@ jobs:
         uses: googleapis/release-please-action@v4
         with:
           release-type: node
-          package-name: "@prjctimg/huetiful"
+          package-name: "@skchr/color"
           default-branch: main
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT}}

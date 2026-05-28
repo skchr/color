@@ -1,3 +1,7 @@
+---
+title: Utilities
+---
+
 # Utilities
 
 ## token
@@ -5,7 +9,7 @@
 Parses any recognizable color to the specified format.
 
 ```typescript
-import { token } from "@prjctimg/huetiful";
+import { token } from "@skchr/color";
 
 // Convert to hex string (default)
 token("cyan"); // "#00ffff"
@@ -25,7 +29,7 @@ token("cyan", { kind: "num" });
 Gets or sets the alpha channel of a color.
 
 ```typescript
-import { alpha } from "@prjctimg/huetiful";
+import { alpha } from "@skchr/color";
 
 // Get alpha
 alpha("#a1bd2f0d"); // 0.050980392156862744
@@ -39,7 +43,7 @@ alpha("b2c3f1", 0.5); // "#b2c3f180"
 Gets or sets the luminance of a color.
 
 ```typescript
-import { luminance } from "@prjctimg/huetiful";
+import { luminance } from "@skchr/color";
 
 // Get luminance
 luminance("#a1bd2f"); // 0.4417749513730954
@@ -53,7 +57,7 @@ luminance("#a1bd2f", 0.5);
 Darkens or lightens a color.
 
 ```typescript
-import { lightness } from "@prjctimg/huetiful";
+import { lightness } from "@skchr/color";
 
 // Lighten
 lightness("blue", { amount: 0.3 }); // "#464646"
@@ -67,7 +71,7 @@ lightness("blue", { amount: 0.3, darken: true });
 Returns the hue family of a color.
 
 ```typescript
-import { family } from "@prjctimg/huetiful";
+import { family } from "@skchr/color";
 
 family("#310000"); // "red"
 family("blue"); // "blue"
@@ -78,7 +82,7 @@ family("blue"); // "blue"
 Returns whether a color is cool or warm.
 
 ```typescript
-import { temp } from "@prjctimg/huetiful";
+import { temp } from "@skchr/color";
 
 temp("blue"); // "cool"
 temp("red"); // "warm"
@@ -89,7 +93,7 @@ temp("red"); // "warm"
 Checks if a color is grayscale.
 
 ```typescript
-import { achromatic } from "@prjctimg/huetiful";
+import { achromatic } from "@skchr/color";
 
 achromatic("gray"); // true
 achromatic("pink"); // false
@@ -100,7 +104,7 @@ achromatic("pink"); // false
 Gets or sets a specific channel value.
 
 ```typescript
-import { mc } from "@prjctimg/huetiful";
+import { mc } from "@skchr/color";
 
 // Get RGB green channel
 mc("rgb.g")("#a1bd2f"); // 0.7411764705882353

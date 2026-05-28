@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { test, expect, describe } from "bun:test";
-import { vangogh, impressionist, picasso } from "../lib";
+import { vangogh, impressionist, picasso, artist } from "../lib";
 
 describe("vangogh", () => {
   test("generates a palette from yellow", () => {
@@ -272,5 +272,64 @@ describe("edge cases", () => {
     const result = picasso("blue", { num: 0 });
     expect(result).toBeDefined();
     expect(Array.isArray(result)).toBe(true);
+  });
+});
+
+describe("artist (consolidated)", () => {
+  test("artist('vangogh') returns a curried function", () => {
+    const fn = artist("vangogh");
+    expect(typeof fn).toBe("function");
+  });
+
+  test("artist('vangogh')('yellow') generates a palette", () => {
+    const result = artist("vangogh")("yellow");
+    expect(result).toBeDefined();
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  test("artist('vangogh')('blue', { num: 8 }) returns 8 colors", () => {
+    const result = artist("vangogh")("blue", { num: 8 });
+    expect(result.length).toBe(8);
+  });
+
+  test("artist('impressionist') returns a curried function", () => {
+    const fn = artist("impressionist");
+    expect(typeof fn).toBe("function");
+  });
+
+  test("artist('impressionist')('green') generates a palette", () => {
+    const result = artist("impressionist")("green");
+    expect(result).toBeDefined();
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  test("artist('impressionist')('blue', { num: 8 }) returns 8 colors", () => {
+    const result = artist("impressionist")("blue", { num: 8 });
+    expect(result.length).toBe(8);
+  });
+
+  test("artist('picasso') returns a curried function", () => {
+    const fn = artist("picasso");
+    expect(typeof fn).toBe("function");
+  });
+
+  test("artist('picasso')('blue') generates a palette", () => {
+    const result = artist("picasso")("blue");
+    expect(result).toBeDefined();
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  test("artist('picasso')('blue', { num: 8 }) returns 8 colors", () => {
+    const result = artist("picasso")("blue", { num: 8 });
+    expect(result.length).toBe(8);
+  });
+
+  test("artist results match standalone function results", () => {
+    const standalone = vangogh("yellow", { num: 5 });
+    const consolidated = artist("vangogh")("yellow", { num: 5 });
+    expect(standalone.length).toBe(consolidated.length);
   });
 });

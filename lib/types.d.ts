@@ -72,7 +72,6 @@ export type ColorOptions = {
 };
 
 /**
- * @type
  * This object returns the lightMode and darkMode optimized version of a color with support to add color vision deficiency simulation to the final color result.
  */
 export type AdaptivePaletteOptions = {
@@ -648,3 +647,8 @@ export type PicassoOptions = InterpolatorOptions & {
    */
   intensity?: number;
 };
+
+/**
+ * Supported artist names for the `artist()` palette generator.
+ */
+export type ArtistType = "vangogh" | "impressionist" | "picasso";

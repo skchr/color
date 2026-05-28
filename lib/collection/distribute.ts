@@ -9,8 +9,9 @@ import { achromatic, luminance, mc, token } from "../utils/index.ts";
 
 /**
  * distributes the `factor`(s) of a color in the collection at the specified `extremum` (i.e the color with the smallest/largest `hue` angle or `chroma` value) to all color tokens in the collection.
- * @param collection the property you want to distribute to the colors in the collection for example `hue | luminance`
- * @param options  optional overrides to change the default configursation
+ * @param {Collection} collection - The collection of colors to distribute values to.
+ * @param {DistributionOptions} [options] - Optional overrides to change the default configuration.
+ * @returns {Collection} - The collection of colors with the distributed factor values.
  */
 export default function distribute<Options extends DistributionOptions>(
   collection: Collection,

@@ -1,12 +1,12 @@
 {
-  "name": "@prjctimg/huetiful",
+  "name": "@skchr/color",
   "version": "0.0.1",
   "type": "module",
-  "main": "./build/node/huetiful.esm.js",
-  "browser": "./build/browser/huetiful.min.js",
-  "jsdelivr": "./build/browser/huetiful.min.js",
+  "main": "./build/node/color.esm.js",
+  "browser": "./build/browser/color.min.js",
+  "jsdelivr": "./build/browser/color.min.js",
   "types": "./build/index.d.ts",
-  "description": "TypeScript utility library for simple 🧮, fast ⏱️ and accessible ♿ color manipulation.",
+  "description": "A color library",
   "devDependencies": {
     "@types/bun": "1.1.9",
     "@types/culori": "2.1.0",
@@ -14,6 +14,7 @@
     "prettier": "3.5.3",
     "tsup": "8.2.4",
     "typedoc": "0.28.3",
+    "typedoc-material-theme": "^1.4.1",
     "typedoc-plugin-markdown": "4.6.3",
     "typescript": "5.0.2"
   },
@@ -26,7 +27,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/prjctimg/huetiful.git"
+    "url": "git+https://github.com/skchr/color.git"
   },
   "keywords": [
     "color",
@@ -39,17 +40,18 @@
     "typescript"
   ],
   "author": "Dean Tarisai",
-  "email": "prjctimg@outlook.com",
-  "homepage": "https://huetiful-js.com",
+  "email": "prjctimg@yandex.com",
+  "homepage": "https://skchr.github.io/color",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/prjctimg/huetiful/issues"
+    "url": "https://github.com/skchr/color/issues"
   },
   "directories": {
     "lib": "lib",
     "test": "tests"
   },
   "scripts": {
+    "docs": "typedoc",
     "fmt": " npx prettier --write ./lib/**/*.ts"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",

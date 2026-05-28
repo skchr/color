@@ -53,14 +53,14 @@ if you prefer not to explicitly instantiate a `new ColorArray`.
  
 * @example
 * 
-* import { ColorArray } from '@prjctimg/huetiful';
+* import { ColorArray } from '@skchr/color';
 * let sample = ['blue', 'pink', 'yellow', 'green'];
 * let wrapper = new ColorArray(sample);
 * // We can even chain the methods and get the result by calling `.output()`
 * // [ 'blue', 'green', 'yellow', 'pink' ]
 
  */
-class ColorArray<C extends Collection, Options extends object> {
+class ColorArray<C extends Collection> {
   colors: Collection;
   implicitReturn: boolean;
   /**
@@ -86,7 +86,7 @@ class ColorArray<C extends Collection, Options extends object> {
  * the entire collection is returned with colors ordered in ascending order using the `differenceHyab` metric.
  * @example
  
- * import { load,colors } from '@prjctimg/huetiful';
+ * import { load,colors } from '@skchr/color';
  *
  * let cols = colors('all', '500')
  *
@@ -109,11 +109,11 @@ console.log(load(cols).nearest('blue', 3));
  * * If the collection of colors contains an achromatic color, the resulting samples may all be grayscale or pure black.
  *  
  * 
- * @param  options Optional channel specific overrides.
- *
+ * @param {InterpolatorOptions} [options] - Optional channel specific overrides.
+ * @returns {Collection | this} - The interpolated color collection or the chainable instance.
  * @example
  *
- * import { load } from '@prjctimg/huetiful';
+ * import { load } from '@skchr/color';
   
    *
    */
@@ -133,28 +133,29 @@ console.log(load(cols).nearest('blue', 3));
  * * Else it returns an object of all the palette types as keys and their values as an array of colors.
  *
  * If no colors are valid for the palette types it returns an empty array for the palette results. It does not work with achromatic colors thus they're excluded from the resulting collection.
- * @param options
+ * @param {DiscoverOptions} [options] - Optional overrides for palette discovery.
+ * @returns {Collection | this} - The discovered palette collection or the chainable instance.
  * @example
  
- * import { load } from '@prjctimg/huetiful';
-  
-  let sample = [
-  "#ffff00",
-  "#00ffdc",
-  "#00ff78",
-  "#00c000",
-  "#007e00",
-  "#164100",
-  "#720000",
-  "#600000",
-  "#4e0000",
-  "#3e0000",
-  "#310000",
-  ]
-  
-  console.log(load(sample).discover({kind:'tetradic'}).output())
-  // [ '#ffff00ff', '#00ffdcff', '#310000ff', '#720000ff' ]
-   */
+ * import { load } from '@skchr/color';
+   
+   let sample = [
+   "#ffff00",
+   "#00ffdc",
+   "#00ff78",
+   "#00c000",
+   "#007e00",
+   "#164100",
+   "#720000",
+   "#600000",
+   "#4e0000",
+   "#3e0000",
+   "#310000",
+   ]
+   
+   console.log(load(sample).discover({kind:'tetradic'}).output())
+   // [ '#ffff00ff', '#00ffdcff', '#310000ff', '#720000ff' ]
+    */
   discover(options?: DiscoverOptions): Collection | this {
     // @ts-ignore:
     return this.#setThis(discover, options);
@@ -181,10 +182,11 @@ console.log(load(cols).nearest('blue', 3));
  * 
  * @see https://culorijs.org/color-spaces/ For the expected ranges per colorspace.
  * Supports expression strings e.g `'>=0.5'`. The supported symbols are `== | === | != | !== | >= | <= | < | >`
-* @param options
-* @example 
+ * @param {FilterByOptions} [options] - Options to customise filtering behaviour.
+ * @returns {Collection | this} - The filtered color collection or the chainable instance.
+ * @example 
 
-import { filterBy } from '@prjctimg/huetiful';
+import { filterBy } from '@skchr/color';
   let sample = [
   '#00ffdc',
   '#00ff78',
@@ -225,9 +227,10 @@ console.log(load(sample).filterBy({start:'>=3', factor:'contrast',against:'green
  *
  * * Plain objects are returned as `Map` objects because they remember insertion order. `Map` objects are returned as is.
  * * `ArrayLike` objects are returned as plain arrays. Plain arrays are returned as is.
- * @param options
+ * @param {SortByOptions} [options] - Options to customise sorting behaviour.
+ * @returns {Collection | this} - The sorted color collection or the chainable instance.
  * @example
- import { sortBy } from '@prjctimg/huetiful';
+  import { sortBy } from '@skchr/color';
 
 let sample = ['purple', 'green', 'red', 'brown']
 
@@ -265,16 +268,17 @@ console.log(
    * * If `relativeMean` is `true`, the `against` option will be used as a subtrahend for calculating the distance between each `extremum`.
    * For example, it will mean "Get the largest/smallest distance between `factor` as compared `against` this color token otherwise just get the smallest/largest `factor` from thr passed in collection."
    *
-   * @param  options Optional parameters to specify how the data should be computed.
-   */
+ * @param {StatsOptions} [options] - Optional parameters to specify how the data should be computed.
+ * @returns {Collection | this} - The statistical data or the chainable instance.
+ */
   stats(options?: StatsOptions): Collection | this {
     // @ts-ignore:
     return this.#setThis(stats, options);
   }
 
-  // distribute(options?: DistributionOptions) {
-  //   return this.#setThis(distribute, options);
-  // }
+  distribute(options?: DistributionOptions) {
+    return this.#setThis(distribute, options);
+  }
   /**
    *
    * Returns the result value from the chain.
@@ -291,7 +295,7 @@ console.log(
  *
  * @example
  * 
- import { Color } from '@prjctimg/huetiful'
+ import { Color } from '@skchr/color'
 
  let wrapper = new Color('pink');
 
@@ -317,7 +321,7 @@ class Color {
 
     // Set the alpha of the color if its not explicitly passed in.
     // @ts-ignore:
-    this.alpha = or(alpha, _opac(c));
+    this._alpha = or(alpha, _opac(c));
 
     // if the color is undefined we cast pure black
     // @ts-ignore:
@@ -353,22 +357,23 @@ class Color {
 
   #setThis(callback, options?) {
     // @ts-ignore:
-    this.color = options
+    this._color = options !== undefined
       ? // @ts-ignore:
         callback(this._color, options)
       : // @ts-ignore:
         callback(this._color);
     // @ts-ignore:
-    return this.implicitReturn ? this.output() : (this as typeof callback);
+    return this.implicitReturn ? this.output() : this;
   }
 
   /**
    *
    *
    * Sets/Gets the opacity or `alpha` channel of a color. If the `value` parameter is omitted it gets the bound color's `alpha` value.
-   * @param amount The value to apply to the opacity channel. The value is normalized to the range [0,1] 
-   * @example
- import { color } from '@prjctimg/huetiful';
+    * @param {string | number} [amount] - The value to apply to the opacity channel. The value is normalized to the range [0,1].
+    * @returns {ColorToken | number} - The alpha channel value if `amount` is omitted, or the color token with the new alpha.
+    * @example
+ import { color } from '@skchr/color';
   
   // Getting the alpha
   console.log(color('#a1bd2f0d').alpha())
@@ -382,6 +387,7 @@ class Color {
   // #b2c3f180
    */
   alpha(amount?: string | number): ColorToken | number {
+    if (amount === undefined) return _opac(this._color);
     return this.#setThis(_opac, amount);
   }
 
@@ -390,13 +396,12 @@ class Color {
    * Sets the value of the specified channel on the passed in color.
    *
    * If the `amount` parameter is `undefined` it gets the value of the specified channel.
-    * @param modeChannel The mode and channel to be retrieved. For example `rgb.b` will return the value of the blue channel's value in the RGB color space of that color.
-    * @param value The value to set on the queried channel. Also supports expressions as strings e.g `"#fc23a1"` `"*0.5"`
-    *
-    * The supported symbols `*` `+` `-` `/`
-   * @example
+     * @param {string} modeChannel - The mode and channel to be retrieved. For example `rgb.b` will return the value of the blue channel's value in the RGB color space of that color.
+     * @param {string | number} [value] - The value to set on the queried channel. Also supports expressions as strings e.g `"#fc23a1"` `"*0.5"`. The supported symbols: `*` `+` `-` `/`.
+     * @returns {ColorToken | number} - The channel value if `value` is omitted, or the color token with the new channel value.
+     * @example
    
-   * import { color } from '@prjctimg/huetiful'
+   * import { color } from '@skchr/color'
    
   console.log(color('#a1bd2f').mc('rgb.g'))
   // 0.7411764705882353
@@ -404,6 +409,7 @@ class Color {
   */
   mc(modeChannel: string, value?: string | number): ColorToken | number {
     const cb = (p: ColorToken) => mc(modeChannel)(p, value);
+    if (value === undefined) return cb(this._color);
     return this.#setThis(cb);
   }
 
@@ -411,9 +417,8 @@ class Color {
      *
      * Interpolates the bound color via the `origin` with the point `t` at `0.5`.
      *
-     * @param {ColorToken} origin The color to interpolate via.
-     value is in the range [0,1]
-      the easing and the interpolation methods /fixups.
+     * @param {ColorToken} origin - The color to interpolate via.
+     * @returns {ColorToken} - The interpolated color.
      */
   via(origin: ColorToken): ColorToken {
     const cb = (a: ColorToken) =>
@@ -429,10 +434,11 @@ class Color {
      *
    *
    * Darkens the bound color by reducing the `lightness` channel by `amount` of the channel. For example `0.3` means reduce the lightness by `0.3` of the channel's current value.
-   * @param amount The amount to darken with. The value is expected to be in the range `[0,1]`. Default is `0.1`.
-   * @example
+    * @param {number} [amount] - The amount to darken with. The value is expected to be in the range `[0,1]`. Default is `0.1`.
+    * @returns {ColorToken} - The darkened or lightened color token.
+    * @example
   
-   *  import { color } from "@prjctimg/huetiful";
+   *  import { color } from "@skchr/color";
   console.log(color('blue').darken(0.3));
   //#464646
   
@@ -476,7 +482,7 @@ class Color {
    *
    * @example
   
-   * import { color } from '@prjctimg/huetiful';
+   * import { color } from '@skchr/color';
    *
    * console.log(color("green").pastel())
    *
@@ -493,12 +499,13 @@ class Color {
     * The colors are then spline interpolated via white or black.
     *
     * A negative `hueStep` will pick a color that is `hueStep` degrees behind the base color.
-    * @param  options The optional overrides object to customize per channel options like interpolation methods and channel fixups.
-    * @example
+     * @param {PairedSchemeOptions} [options] - The optional overrides object to customize per channel options like interpolation methods and channel fixups.
+     * @returns {ColorToken | Collection} - The paired color scheme as a collection or a single color token.
+     * @example
 
-    * import { color } from '@prjctimg/huetiful'
-    
-    console.log(color("green").pairedScheme({hueStep:6,samples:4,tone:'dark'}))
+     * import { color } from '@skchr/color'
+     
+     console.log(color("green").pairedScheme({hueStep:6,samples:4,tone:'dark'}))
     // [ '#008116ff', '#006945ff', '#184b4eff', '#007606ff' ]
      */
   pair(options?: PairedSchemeOptions): ColorToken | Collection {
@@ -518,9 +525,10 @@ class Color {
    *
    *  The length of the resultant array is the number of samples (`num`) mult lied by 2 plus the base color passed in or `(num * 2) + 1`.
    *
-   * @param options The optional overrides object to customize the `HueShiftOptions` like easing function.  
-   * @example
-  import { color } from "@prjctimg/huetiful";
+     * @param {HueshiftOptions} [options] - The optional overrides object to customize the hue shift options like easing function.
+     * @returns {Collection} - A collection of hue-shifted colors.
+     * @example
+  import { color } from "@skchr/color";
     
     let hueShiftedPalette = color("#3e0000").hueShift({ iterations:1 });
     
@@ -545,7 +553,7 @@ class Color {
    * For example `'red'` or `'blue-green'`. If the color is achromatic it returns the string `'gray'`.
    * @example
   
-   * import { color } from '@prjctimg/huetiful'
+   * import { color } from '@skchr/color'
   
   
   console.log(color("#310000").family())
@@ -556,18 +564,18 @@ class Color {
     | { hue: BiasedHues & ColorFamily; bias: false | ColorFamily } {
     // @ts-ignore:
 
-    return this.#setThis(family);
+    return family(this._color);
   }
 
   /**
      *
      * Creates a color scale between an earth tone and any color token using spline interpolation.
      *
-     * @param options
-     *
+     * @param {EarthtoneOptions} [options] - Optional overrides for customising interpolation and easing functions.
+     * @returns {ColorToken | Collection} - The interpolated earth tone color(s) or the chainable instance.
      * @example
      
-     * import { color } from '@prjctimg/huetiful'
+     * import { color } from '@skchr/color'
      *
      * let base = 'purple'
      *
@@ -599,29 +607,18 @@ class Color {
   /**
    *
    * Gets the contrast value between the bound and  comparison ( or `against`) color.
-   * @param against The color to use for comparison. The default is `'black'`.
-   * @example
+    * @param {ColorToken} [against] - The color to use for comparison. The default is `'black'`.
+    * @returns {number} - The contrast ratio between the bound color and the comparison color.
+    * @example
    
-   * import { color } from '@prjctimg/huetiful'
-   *
-   * console.log(color('pink').contrast('yellow'))
+    * import { color } from '@skchr/color'
+    *
+    * console.log(color('pink').contrast('yellow'))
    * // 1.4322318222624262
    */
   contrast(against?: ColorToken): number {
-    return this.#setThis(
-      contrast,
-      // @ts-ignore:
-      /light|dark/gi.test(against)
-        ? // @ts-ignore:
-          {
-            // @ts-ignore:
-            light: this?.background?.lightMode,
-            // @ts-ignore:
-            dark: this?.background?.darkMode,
-            // @ts-ignore:
-          }[against?.toLowerCase()]
-        : against,
-    );
+    // @ts-ignore:
+    return contrast(this._color, against);
   }
 
   /**
@@ -629,10 +626,10 @@ class Color {
    * Gets the luminance of the passed in color token.
    *
    * If the `amount` parameter is not passed in else it will adjust the luminance by interpolating the color with black (to decrease luminance) or white (to increase the luminance) by the specified `amount`.
-   * @param amount The `luminance` value to set on the bound color.
-   *
-   * @example
-    import { color } from '@prjctimg/huetiful'
+    * @param {number} [amount] - The luminance value to set on the bound color.
+    * @returns {number | ColorToken} - The luminance value if `amount` is omitted, or the color token with the new luminance.
+    * @example
+     import { color } from '@skchr/color'
    *
   let myColor = 'green';
   console.log(color(myColor).luminance());
@@ -645,16 +642,18 @@ class Color {
    
      */
   luminance(amount?: number): number | ColorToken {
+    if (amount === undefined) return _lmnce(this._color);
     return this.#setThis(_lmnce, amount);
   }
 
   /**
    *
    * Sets/Gets the saturation value of the bound color.
-   * @param amount The amount of `saturation` to set on the bound color token. Also supports string expressions.
-   * @example
-   *
-    import { color } from '@prjctimg/huetiful'
+    * @param {number} [amount] - The amount of saturation to set on the bound color token. Also supports string expressions.
+    * @returns {number | ColorToken} - The saturation value if `amount` is omitted, or the color token with the new saturation.
+    * @example
+    *
+     import { color } from '@skchr/color'
    *
    *
    * let myColor = ['lch',60,13,0.5]
@@ -669,6 +668,10 @@ class Color {
    */
   saturation(amount?: number): number | ColorToken {
     // @ts-ignore:
+    if (amount === undefined) {
+      const c = mcchn("c", this.colorspace);
+      return mc(c)(this._color);
+    }
     const c = mcchn("c", this.colorspace),
       cb = (a: ColorToken) => mc(c)(a, amount);
     return this.#setThis(cb, amount);
@@ -680,7 +683,7 @@ class Color {
    * 
    * @example
    
-   * import { color } from "@prjctimg/huetiful";
+   * import { color } from "@skchr/color";
   import { formatHex8, interpolate, samples } from "culori"
    
   var test = c => color(c).isAchromatic()
@@ -723,14 +726,15 @@ class Color {
    
    */
   achromatic(): boolean {
-    return this.#setThis(achromatic);
+    // @ts-ignore:
+    return achromatic(this._color);
   }
 
   /**
     * Returns a rough estimation of a color's temperature as either `'cool'` or `'warm'`.
    * @example
    
-   * import { color } from '@prjctimg/huetiful'
+   * import { color } from '@skchr/color'
    
   let sample = [
     "#00ffdc",
@@ -747,7 +751,7 @@ class Color {
    */
   temp(): "warm" | "cool" {
     // @ts-ignore:
-    return this.#setThis(temp);
+    return temp(this._color);
   }
 
   /**
@@ -760,16 +764,16 @@ class Color {
    * * 'deuteranopia' - An inability to distinguish the color 'green'.. The `kind` is `'green'`.
    * * 'protanopia' - An inability to distinguish the color 'red'. The `kind` is `'red'`.
    *
-   * @param options
-   *
-   * @example
-   
-   * import { color } from '@prjctimg/huetiful'
+     * @param {DeficiencyOptions} [options] - Options to customize the color vision deficiency simulation.
+     * @returns {ColorToken} - The simulated color as perceived by the specified color vision deficiency.
+     * @example
     
-    // Here we are simulating color blindness of tritanomaly or we can't see 'blue'.
-    // We are passing in our color as an array of channel values in the mode "rgb". The severity is set to 0.1
-    let tritanomaly = color(['rgb', 230, 100, 50, 0.5]).colorDeficiency('blue', 0.1)
-    console.log(tritanomaly)
+     * import { color } from '@skchr/color'
+      
+      // Here we are simulating color blindness of tritanomaly or we can't see 'blue'.
+      // We are passing in our color as an array of channel values in the mode "rgb". The severity is set to 0.1
+      let tritanomaly = color(['rgb', 230, 100, 50, 0.5]).colorDeficiency('blue', 0.1)
+      console.log(tritanomaly)
     // #dd663680
     
     // Here we are simulating color blindness of tritanomaly or we can't see 'red'. The severity is not explicitly set so it defaults to 1
@@ -786,7 +790,7 @@ class Color {
    * Returns a randomised classic color scheme from the bound color.
    * @example
    *
-   import { color  } from '@prjctimg/huetiful'
+   import { color  } from '@skchr/color'
    
   console.log(color("#a1bd2f").scheme("triadic"))
   // [ '#a1bd2fff', '#00caffff', '#ff78c9ff' ]
@@ -800,7 +804,7 @@ class Color {
    * Returns the final value from the chain.
    * @example
 
-   * import { color } from '@prjctimg/huetiful'
+   * import { color } from '@skchr/color'
    
    * let myOutput = color(['rgb',200,34,65]).output()
    *

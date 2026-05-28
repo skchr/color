@@ -84,6 +84,20 @@ function generateRosePeriodPalette(
   return palette;
 }
 
+/**
+ * Generates a palette inspired by Pablo Picasso's Blue and Rose periods.
+ *
+ * @param {ColorToken} [baseColor="blue"] The base color to derive the palette from.
+ * @param {PicassoOptions} [options] Optional overrides for period, intensity, and number of colors.
+ * @returns {Collection} An array of color tokens forming a Picasso-inspired palette.
+ *
+ * @example
+ * ```ts
+ * import { picasso } from '@skchr/color'
+ *
+ * picasso("blue", { period: "blue", intensity: 0.8 })
+ * ```
+ */
 export default function picasso(
   baseColor: ColorToken = "blue",
   options: PicassoOptions = {},

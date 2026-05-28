@@ -35,11 +35,12 @@ import { samples } from "culori/fn";
  * Note that the `num` parameter works on the `monochromatic` palette type only. Other schemes will return a constant amount of samples.
  * 
  *
- * @param baseColor The color to create the palette(s) from.
- * @param options Optional overrides.
+ * @param {ColorToken} [baseColor] - The color to create the palette(s) from.
+ * @param {SchemeOptions} [options] - Optional overrides.
+ * @returns {Collection} - A collection of colors forming a classic color scheme.
  * @example
  *
- import { scheme } from '@prjctimg/huetiful'
+ import { scheme } from '@skchr/color'
 
 console.log(scheme("triadic")("#a1bd2f"))
 // [ '#a1bd2f', '#00caff', '#ff78c9' ]

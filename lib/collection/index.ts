@@ -1,3 +1,9 @@
+/**
+ * @module collection
+ *
+ * Functions for sorting, filtering, distributing, and analyzing collections of colors.
+ */
+
 import sortBy from "./sortBy.ts";
 import distribute from "./distribute.ts";
 import stats from "./stats.ts";

@@ -3,11 +3,12 @@ import type { ColorToken, EarthtoneOptions } from "../types.d.ts";
 import interpolator from "./interpolator.ts";
 /**
  * Creates a color scale between an earth tone and any color token using spline interpolation.
- * @param  baseColor The color to interpolate an earth tone with.
- * @param  options Optional overrides for customising interpolation and easing functions.
+ * @param {ColorToken} baseColor - The color to interpolate an earth tone with.
+ * @param {EarthtoneOptions} [options] - Optional overrides for customising interpolation and easing functions.
+ * @returns {ColorToken | Array<ColorToken>} - The interpolated earth tone color(s).
  * @example
  *
- * import { earthtone } from '@prjctimg/huetiful'
+ * import { earthtone } from '@skchr/color'
 
 
 console.log(earthtone("pink",'lch',{earthtones:'clay',samples:5 }))
@@ -15,7 +16,7 @@ console.log(earthtone("pink",'lch',{earthtones:'clay',samples:5 }))
 
  */
 export default function earthtone(
-  baseColor?: ColorToken,
+  baseColor: ColorToken = "cyan",
   options: EarthtoneOptions = {},
 ): ColorToken | Array<ColorToken> {
   let { num, earthtones, colorspace, kind, closed } = options;

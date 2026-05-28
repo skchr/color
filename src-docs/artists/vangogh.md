@@ -1,3 +1,7 @@
+---
+title: Van Gogh
+---
+
 # Van Gogh Palette Generator
 
 Inspired by Vincent van Gogh's distinctive color palette, particularly from his Arles period (1888-1889).
@@ -14,7 +18,7 @@ Van Gogh's work is characterized by:
 ## Usage
 
 ```typescript
-import { vangogh } from "@prjctimg/huetiful";
+import { vangogh } from "@skchr/color";
 
 // Default: Arles period with bold contrast
 vangogh("yellow");
@@ -33,11 +37,11 @@ vangogh("orange", { contrast: "subtle" });
 
 ## Options
 
-| Option     | Type                                  | Default   | Description                      |
-| ---------- | ------------------------------------- | --------- | -------------------------------- |
-| `period`   | `'netherlands' \| 'paris' \| 'arles'` | `'arles'` | Artistic period                  |
-| `contrast` | `'subtle' \| 'medium' \| 'bold'`      | `'bold'`  | Complementary contrast intensity |
-| `num`      | `number`                              | `6`       | Number of colors in palette      |
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `period` | `'netherlands' \| 'paris' \| 'arles'` | `'arles'` | Artistic period |
+| `contrast` | `'subtle' \| 'medium' \| 'bold'` | `'bold'` | Complementary contrast intensity |
+| `num` | `number` | `6` | Number of colors in palette |
 
 ## Periods
 

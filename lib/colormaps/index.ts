@@ -285,7 +285,7 @@ function hasScheme(s: string = "", obj: Collection = {}) {
  * @returns {Collection|import('../types.js').ColorToken}  A collection of colors in the specified colorspace. The default is hex if `colorspace` is `undefined.`
  * @example
  *
- * import { sequential } from '@prjctimg/huetiful'
+ * import { sequential } from '@skchr/color'
 
 
 console.log(sequential("OrRd"))
@@ -525,7 +525,7 @@ function sequential<Scheme extends SequentialScheme>(
  * @param  scheme The name of the scheme.
  * @example
  *
- * import { diverging } from '@prjctimg/huetiful'
+ * import { diverging } from '@skchr/color'
 
 
 
@@ -668,7 +668,7 @@ function diverging<Scheme extends DivergingScheme>(
  * @param scheme The name of the scheme
  * @example
  *
- * import { qualitative } from '@prjctimg/huetiful'
+ * import { qualitative } from '@skchr/color'
 
 
 console.log(qualitative("Accent"))
@@ -830,7 +830,7 @@ function nearest(
    * @returns {Array<string>|string}
    * @example
    *
-   * import { colors } from "@prjctimg/huetiful";
+   * import { colors } from "@skchr/color";
 
   // We pass in red as the target hue.
   // It returns a function that can be called with an optional value parameter

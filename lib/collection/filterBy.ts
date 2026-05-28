@@ -44,11 +44,12 @@ import { luminance, mc, token } from "../utils/index.ts";
  * Supports expression strings e.g `'>=0.5'`.
  *
  * The supported symbols are `== | === | != | !== | >= | <= | < | >`
- * @param collection The collection of colors to filter. Any object with enumerable keys and color tokens as values will work. 
- * @param  options Options to customise filtering behaviour.
+ * @param {Collection} collection - The collection of colors to filter. Any object with enumerable keys and color tokens as values will work.
+ * @param {FilterByOptions} [options] - Options to customise filtering behaviour.
+ * @returns {Collection} - The filtered collection of colors.
  * @example
  *
- * import { filterBy } from '@prjctimg/huetiful'
+ * import { filterBy } from '@skchr/color'
 
   let sample = [
   '#00ffdc',

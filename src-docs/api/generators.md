@@ -1,3 +1,7 @@
+---
+title: Generators
+---
+
 # Generators
 
 Palette generators create color palettes from a starting color.
@@ -7,7 +11,7 @@ Palette generators create color palettes from a starting color.
 Creates a palette where hue shifts as lightness changes.
 
 ```typescript
-import { hueshift } from "@prjctimg/huetiful";
+import { hueshift } from "@skchr/color";
 
 hueshift("#3e0000");
 // ['#ffffe1', '#ffdca5', '#ca9a70', '#935c40', '#5c2418', '#3e0000', ...]
@@ -25,7 +29,7 @@ hueshift("#3e0000");
 Creates a palette between an earth tone and a color.
 
 ```typescript
-import { earthtone } from "@prjctimg/huetiful";
+import { earthtone } from "@skchr/color";
 
 earthtone("pink", { earthtones: "clay" });
 // ['#6a5c52', '#8d746a', '#b38d86', '#d9a6a6', '#ffc0cb']
@@ -42,7 +46,7 @@ earthtone("pink", { earthtones: "clay" });
 Generates a random pastel variant.
 
 ```typescript
-import { pastel } from "@prjctimg/huetiful";
+import { pastel } from "@skchr/color";
 
 pastel("green"); // ['#a8d8a8', '#b8e0b0', '#c8e8c0', ...]
 ```
@@ -52,7 +56,7 @@ pastel("green"); // ['#a8d8a8', '#b8e0b0', '#c8e8c0', ...]
 Creates classic color schemes.
 
 ```typescript
-import { scheme } from "@prjctimg/huetiful";
+import { scheme } from "@skchr/color";
 
 scheme("blue", { kind: "triadic" });
 // ['#0000ff', '#00ff00', '#ff0000']
@@ -73,7 +77,7 @@ scheme("blue", { kind: "complementary" });
 Creates paired color palettes.
 
 ```typescript
-import { pair } from "@prjctimg/huetiful";
+import { pair } from "@skchr/color";
 
 pair("green", { hueStep: 6, samples: 4 });
 ```
@@ -83,7 +87,7 @@ pair("green", { hueStep: 6, samples: 4 });
 Finds color schemes from a collection.
 
 ```typescript
-import { discover } from "@prjctimg/huetiful";
+import { discover } from "@skchr/color";
 
 discover(["red", "blue", "green"], { kind: "tetradic" });
 ```
@@ -93,7 +97,7 @@ discover(["red", "blue", "green"], { kind: "tetradic" });
 Interpolates between colors.
 
 ```typescript
-import { interpolator } from "@prjctimg/huetiful";
+import { interpolator } from "@skchr/color";
 
 interpolator(["red", "blue"], { num: 5 });
 // ['#ff0000', '#bf0040', '#7f0080', '#4000c0', '#0000ff']

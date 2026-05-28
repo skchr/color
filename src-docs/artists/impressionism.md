@@ -1,3 +1,7 @@
+---
+title: Impressionism
+---
+
 # Impressionist Palette Generator
 
 Inspired by the Impressionist movement (Monet, Renoir, Pissarro) and Neo-Impressionism (Seurat, Signac).
@@ -14,7 +18,7 @@ Impressionism revolutionized color by:
 ## Usage
 
 ```typescript
-import { impressionist } from "@prjctimg/huetiful";
+import { impressionist } from "@skchr/color";
 
 // Default: broken color technique
 impressionist("green");
@@ -35,12 +39,12 @@ impressionist("gray", { timeOfDay: "dusk" });
 
 ## Options
 
-| Option        | Type                                         | Default    | Description                           |
-| ------------- | -------------------------------------------- | ---------- | ------------------------------------- |
-| `technique`   | `'broken' \| 'optical'`                      | `'broken'` | Color application technique           |
-| `timeOfDay`   | `'morning' \| 'noon' \| 'evening' \| 'dusk'` | `'noon'`   | Quality of light                      |
-| `blueShadows` | `boolean`                                    | `true`     | Use blue for shadows instead of black |
-| `num`         | `number`                                     | `6`        | Number of colors                      |
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `technique` | `'broken' \| 'optical'` | `'broken'` | Color application technique |
+| `timeOfDay` | `'morning' \| 'noon' \| 'evening' \| 'dusk'` | `'noon'` | Quality of light |
+| `blueShadows` | `boolean` | `true` | Use blue for shadows instead of black |
+| `num` | `number` | `6` | Number of colors |
 
 ## Techniques
 

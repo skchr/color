@@ -22,6 +22,20 @@ const PERIOD_CONFIGS = {
   },
 };
 
+/**
+ * Generates a palette inspired by Vincent van Gogh's artistic periods.
+ *
+ * @param {ColorToken} [baseColor="yellow"] The base color to derive the palette from.
+ * @param {VangoghOptions} [options] Optional overrides for period, contrast, and number of colors.
+ * @returns {Collection} An array of color tokens forming a van Gogh-inspired palette.
+ *
+ * @example
+ * ```ts
+ * import { vangogh } from '@skchr/color'
+ *
+ * vangogh("yellow", { period: "arles" })
+ * ```
+ */
 export default function vangogh(
   baseColor: ColorToken = "yellow",
   options: VangoghOptions = {},

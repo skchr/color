@@ -56,8 +56,9 @@ import {
  * To get all the factors in the result object pass `undefined` to `factor`.
  *
  *
- * @param  collection The collection to compute stats from. Any collection with color tokens as values will work.
- * @param options The optional overrides to customize the computing behaviour for the factors.
+ * @param {Collection} collection - The collection to compute stats from. Any collection with color tokens as values will work.
+ * @param {StatsOptions} [options] - The optional overrides to customize the computing behaviour for the factors.
+ * @returns {Stats} - The statistical data computed from the collection.
  */
 export default function stats(
   collection: Collection = [],

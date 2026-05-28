@@ -1,10 +1,12 @@
-# Huetiful
+---
+title: Color
+---
 
-TypeScript utility library for simple, fast and accessible color manipulation.
+# Color
 
 ## Overview
 
-Huetiful is a color manipulation library that uses color theory principles to provide functions for working with color as both individual tokens or collections. It depends on [Culori](https://culori.js.org/) for color manipulation.
+This library uses color theory principles to provide functions for working with color as both individual tokens or collections. It depends on [Culori](https://culori.js.org/) for color manipulation.
 
 ## Features
 

@@ -19,11 +19,12 @@ import scheme from "./scheme.ts";
  * * Else it returns an object of all the palette types as keys and their values as an array of colors.
  * If no colors are valid for the palette types it returns an empty array for the palette results. It does not work with achromatic colors thus they're excluded from the resulting collection.
  *
- * @param  colors The collection of colors to create palettes from. Preferably use 6 or more colors for better results.
-* @param  options
+ * @param {Collection} colors - The collection of colors to create palettes from. Preferably use 6 or more colors for better results.
+ * @param {DiscoverOptions} [options] - Optional overrides for palette discovery.
+ * @returns {Collection} - A collection of discovered palette matches.
  * @example
  *
- * import { discover } from '@prjctimg/huetiful'
+ * import { discover } from '@skchr/color'
 
 let sample = [
   "#ffff00",

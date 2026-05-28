@@ -35,6 +35,20 @@ const TIME_CONFIGS = {
   },
 };
 
+/**
+ * Generates a palette inspired by Impressionist and Neo-Impressionist color techniques.
+ *
+ * @param {ColorToken} [baseColor="green"] The base color to derive the palette from.
+ * @param {ImpressionistOptions} [options] Optional overrides for technique, time of day, blue shadows, and number of colors.
+ * @returns {Collection} An array of color tokens forming an Impressionist-inspired palette.
+ *
+ * @example
+ * ```ts
+ * import { impressionist } from '@skchr/color'
+ *
+ * impressionist("green", { timeOfDay: "morning" })
+ * ```
+ */
 export default function impressionist(
   baseColor: ColorToken = "green",
   options: ImpressionistOptions = {},

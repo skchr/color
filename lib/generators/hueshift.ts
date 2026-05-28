@@ -16,11 +16,11 @@ import type { Collection, ColorToken, HueshiftOptions } from "../types.d.ts";
  *
  *  The length of the resultant array is the number of samples (`num`) mult lied by 2 plus the base color passed in or simply `(num * 2) + 1`.
  *
- * @param baseColor The color to use as the base of the palette.
- * @param options The optional overrides object.
-
+ * @param {ColorToken} [baseColor] - The color to use as the base of the palette.
+ * @param {HueshiftOptions} [options] - The optional overrides object.
+ * @returns {Collection} - A collection of hue-shifted colors.
  * @example
- * import { hueshift } from "@prjctimg/huetiful";
+ * import { hueshift } from "@skchr/color";
 
 let hueShiftedPalette = hueShift("#3e0000");
 

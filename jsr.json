@@ -1,5 +1,5 @@
 {
-  "name": "@prjctimg/huetiful",
+  "name": "@skchr/color",
   "version": "refs/heads/main",
   "exports": "./lib/index.ts",
   "publish": {

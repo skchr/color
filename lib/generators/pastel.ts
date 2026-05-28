@@ -11,10 +11,11 @@ import { averageNumber, random } from "culori/fn";
  *
  *  
  *
- * @param baseColor The color to return a pastel variant of.
+ * @param {ColorToken} [baseColor] - The color to return a pastel variant of.
+ * @returns {ColorToken} - A random pastel variant of the input color.
  * @example
  *
-import { pastel } from '@prjctimg/huetiful'
+import { pastel } from '@skchr/color'
 
 console.log(pastel("green"))
 

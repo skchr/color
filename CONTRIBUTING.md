@@ -1,6 +1,6 @@
 # Contributing 💙
 
-Thank you :smile: for contributing to [@prjctimg/huetiful-js](https://github.com/prjctimg/huetiful)!
+Thank you :smile: for contributing to [@skchr/color](https://github.com/skchr/color)!
 
 On this page you'll find information on how to setup the project and navigate the file structure.
 
@@ -23,7 +23,7 @@ The project structure is as follows:
 To quickly get the development environment ready you can run the following command, you can replace `npm` with any package manager :
 
 ```sh
-git clone https://github.com/prjctimg/huetiful && cd huetiful
+git clone https://github.com/skchr/color && cd color
 
 # Package manager of your choice
 npm i -D

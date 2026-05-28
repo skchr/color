@@ -14,21 +14,21 @@ import interpolator from "./interpolator.ts";
  * 
  * A negative `hueStep` will pick a color that is `hueStep` degrees behind the base color.
  *
- * @param baseColor The color to return a paired color scheme from.
- * @param options The optional overrides object to customize per channel options like interpolation methods and channel fixups.
-
+ * @param {ColorToken} baseColor - The color to return a paired color scheme from.
+ * @param {PairedSchemeOptions} [options] - The optional overrides object to customize per channel options like interpolation methods and channel fixups.
+ * @returns {Collection | ColorToken} - The paired color scheme as a collection or a single color token.
  * @example
  *
- * import { pair } from '@prjctimg/huetiful'
+ * import { pair } from '@skchr/color'
 
 console.log(pair("green",{hueStep:6,num:4,tone:'dark'}))
 // [ '#008116ff', '#006945ff', '#184b4eff', '#007606ff' ]
  */
 export default function pair(
-  baseColor?: ColorToken,
+  baseColor: ColorToken = "cyan",
   options?: PairedSchemeOptions,
 ): Collection | ColorToken {
-  let { num, via, hueStep, colorspace } = options as PairedSchemeOptions;
+  let { num, via, hueStep, colorspace } = (options || {}) as PairedSchemeOptions;
   via = or(via, "light");
   hueStep = or(hueStep, 5);
   colorspace = or(colorspace, "lch65");
